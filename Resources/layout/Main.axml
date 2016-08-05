@@ -8,9 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello" />
-    <CircularProgressBar.InitCircularProgressClass
+    <InitCircularProgressClass
         android:id="@+id/rate_progress_bar"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:visibility="invisible" />
+        android:layout_height="30dp" />
 </LinearLayout>

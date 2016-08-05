@@ -23,7 +23,7 @@ namespace CircularProgressBar
 			init();
 		}
 		private void init() {
-			mCircularProgressBar = new CircularProgressBarClass(_activity);
+			mCircularProgressBar = new CircularProgressBarClass(this);
 			this.AddView(mCircularProgressBar);
 			LayoutParams lp = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 			lp.Gravity = GravityFlags.Center;
