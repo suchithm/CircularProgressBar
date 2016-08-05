@@ -13,7 +13,7 @@ namespace CircularProgressBar
 	{
 		CircularProgressBarClass mCircularProgressBar;
 		TextView mRateText;
-		Activity _activity;
+		Context _activity;
 		public InitCircularProgressClass(Context context):base(context) {
 			  _activity=context;
 			init();
@@ -63,7 +63,7 @@ namespace CircularProgressBar
 		public void onChange(int duration, int progress, float rate)
 		{
 			
-			mRateText.SetText( ( ((int)(rate * 90 )) ).ToString());
+			mRateText.SetText( (int) (rate * 90 ));
 		}
 	
 		 	 

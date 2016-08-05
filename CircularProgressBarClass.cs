@@ -80,7 +80,7 @@ namespace CircularProgressBar
 			int radius = halfWidth < halfHeight ? halfWidth : halfHeight;
 			float halfStrokeWidth = mStrokeWidth / 2;
 
-			mPaint.Color=mBackgroundColor;
+			//mPaint.Color=mBackgroundColor;
 			mPaint.Dither=true;
 			mPaint.Flags = PaintFlags.AntiAlias; 
 			mPaint.AntiAlias=true;
@@ -88,7 +88,7 @@ namespace CircularProgressBar
 			mPaint.SetStyle(Paint.Style.Stroke);
 			canvas.DrawCircle(halfWidth, halfHeight, radius - halfStrokeWidth, mPaint);
 
-			mPaint.Color=mPrimaryColor;
+			//mPaint.Color=mPrimaryColor;
 			mRectF.Top = halfHeight - radius + halfStrokeWidth;
 			mRectF.Bottom = halfHeight + radius - halfStrokeWidth;
 			mRectF.Left = halfWidth - radius + halfStrokeWidth;

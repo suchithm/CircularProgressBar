@@ -928,6 +928,9 @@ namespace CircularProgressBar
 			// aapt resource value: 0x7f0a002f
 			public const int radio = 2131361839;
 			
+			// aapt resource value: 0x7f0a003d
+			public const int rate_progress_bar = 2131361853;
+			
 			// aapt resource value: 0x7f0a0032
 			public const int search_badge = 2131361842;
 			
