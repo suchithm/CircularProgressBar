@@ -13,25 +13,25 @@ namespace CircularProgressBar
 	  int mProgress = 30;
 	  Paint mPaint = new Paint();
 	  RectF mRectF = new RectF();
-	  int mBackgroundColor = Color.White;
-	  int mPrimaryColor = Color.Yellow; 
+	  Color mBackgroundColor = Color.White;
+	  Color mPrimaryColor = Color.Yellow; 
 	  float mStrokeWidth = 10F;
 
-		public interface IOnProgressChangeListener {
+	  public IOnProgressChangeListener mOnChangeListener;
 
-			  void onChange(int duration, int progress, float rate);
+	   public interface IOnProgressChangeListener {
+			
+			void onChange(int duration, int progress, float rate);
 		}
-		public IOnProgressChangeListener mOnChangeListener;
 
 		public void setOnProgressChangeListener(IOnProgressChangeListener l)
 		{
 			mOnChangeListener = l;
 		}
 		public CircularProgressBarClass(Context context) :base(context) {
-		 ;
 		}
+
 		public CircularProgressBarClass(Context context, IAttributeSet attrs) : base(context,attrs) {
-			;//super(context, attrs);
 		}
 
 		public void setMax( int max ) {
@@ -60,11 +60,11 @@ namespace CircularProgressBar
 			return mProgress;
 		}
 
-		public void setBackgroundColor( int color ) {
+		public void setBackgroundColor( Color color ) {
 			mBackgroundColor = color;
 		}
 
-		public void setPrimaryColor( int color ) {
+		public void setPrimaryColor( Color color ) {
 			mPrimaryColor = color;
 		}
 
@@ -80,7 +80,7 @@ namespace CircularProgressBar
 			int radius = halfWidth < halfHeight ? halfWidth : halfHeight;
 			float halfStrokeWidth = mStrokeWidth / 2;
 
-			//mPaint.Color=mBackgroundColor;
+			mPaint.Color=mBackgroundColor;
 			mPaint.Dither=true;
 			mPaint.Flags = PaintFlags.AntiAlias; 
 			mPaint.AntiAlias=true;
@@ -88,7 +88,7 @@ namespace CircularProgressBar
 			mPaint.SetStyle(Paint.Style.Stroke);
 			canvas.DrawCircle(halfWidth, halfHeight, radius - halfStrokeWidth, mPaint);
 
-			//mPaint.Color=mPrimaryColor;
+			mPaint.Color=mPrimaryColor;
 			mRectF.Top = halfHeight - radius + halfStrokeWidth;
 			mRectF.Bottom = halfHeight + radius - halfStrokeWidth;
 			mRectF.Left = halfWidth - radius + halfStrokeWidth;
