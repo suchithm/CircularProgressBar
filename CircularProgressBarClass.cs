@@ -96,7 +96,7 @@ namespace CircularProgressBar
 			canvas.DrawArc(mRectF, -90, getRateOfProgress() * 360, false, mPaint);
 			canvas.Save();
 		} 
-
+		//a
 		private float getRateOfProgress() {
 			return (float)mProgress / mDuration;
 		}
