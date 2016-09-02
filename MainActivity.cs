@@ -6,7 +6,7 @@ using Android.Graphics;
 
 namespace CircularProgressBar
 {
-	[Activity (Label = "CircularProgressBar", MainLauncher = true, Icon = "@mipmap/icon")]
+	[Activity (Label = "QuickQuiz", MainLauncher = true, Icon = "@mipmap/icon")]
 	public class MainActivity : Activity
 	{
 		InitCircularProgressClass initCircularProgressBar;  
@@ -17,12 +17,9 @@ namespace CircularProgressBar
  
 			SetContentView (Resource.Layout.Main);
  
-			Button button = FindViewById<Button> (Resource.Id.myButton);
-			
-			button.Click += delegate {  
-				
-				fnInitializeCircleBar();
-
+			Button button = FindViewById<Button> (Resource.Id.myButton); 
+			fnInitializeCircleBar();
+			button.Click += delegate {   
 				var timer = new System.Timers.Timer();
 				timer.Interval = 1000; 
 				timer.Elapsed += OnTimedEvent;
@@ -35,13 +32,14 @@ namespace CircularProgressBar
 			initCircularProgressBar.setMax(60);
 			initCircularProgressBar.ClearAnimation(); 
 			initCircularProgressBar.setTextSize (24);
-			initCircularProgressBar.setTextColor (Color.Blue);
+			initCircularProgressBar.setTextColor (Color.ParseColor("#0D85EC"));
 			initCircularProgressBar.setTextTypeFaceBold ();
+			initCircularProgressBar.setProgress(0);
 
 			initCircularProgressBar.getCircularProgressBar().setCircleWidth(20);
 			initCircularProgressBar.getCircularProgressBar().setMax(60);
-			initCircularProgressBar.getCircularProgressBar().setPrimaryColor(Color.Blue);
-			initCircularProgressBar.getCircularProgressBar().setBackgroundColor(Color.White);  
+			initCircularProgressBar.getCircularProgressBar().setPrimaryColor(Color.ParseColor("#0D85EC")); ;
+			initCircularProgressBar.getCircularProgressBar().setBackgroundColor(Color.ParseColor("#83C6FF"));  
 		}
 
 		void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)

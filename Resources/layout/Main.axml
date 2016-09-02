@@ -2,15 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Button
-        android:id="@+id/myButton"
+    android:layout_height="match_parent"
+    android:background="#ffffffff">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
-    <CircularProgressBar.InitCircularProgressClass
-        android:id="@+id/rate_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#ff2be1f0" />
+        android:layout_marginTop="20dp"
+        android:weightSum="2">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total duration : 60min"
+                android:id="@+id/txtDuration"
+                android:layout_above="@+id/txtQuestion"
+                android:layout_marginBottom="10dp"
+                android:textColor="#ff000000" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total question : 10"
+                android:id="@+id/txtQuestion"
+                android:layout_centerVertical="true"
+                android:textColor="#ff000000" />
+            <Button
+                android:id="@+id/myButton"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/btnStart"
+                android:textAllCaps="false"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:background="#ffc3c3c3"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+        <CircularProgressBar.InitCircularProgressClass
+            android:id="@+id/rate_progress_bar"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>

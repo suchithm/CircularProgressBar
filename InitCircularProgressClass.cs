@@ -28,9 +28,7 @@ namespace CircularProgressBar
 			mRateText = new TextView(Context);
 			AddView(mRateText);
 			mRateText.LayoutParameters=lp;
-			mRateText.Gravity=GravityFlags.Center;
-			mRateText.SetTextColor( Color.Black);
-			mRateText.SetTextSize( ComplexUnitType.Dip,10);
+			mRateText.Gravity=GravityFlags.Center;  
 			mCircularProgressBar.setOnProgressChangeListener(this);
 		}
 		public void setMax( int max ) {
