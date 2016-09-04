@@ -14,17 +14,11 @@ namespace CircularProgressBar
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
- 
-			SetContentView (Resource.Layout.Main);
- 
-			Button button = FindViewById<Button> (Resource.Id.myButton); 
+			RequestWindowFeature(Android.Views.WindowFeatures.NoTitle);
+			SetContentView (Resource.Layout.Main); 
 			fnInitializeCircleBar();
-			button.Click += delegate {   
-				var timer = new System.Timers.Timer();
-				timer.Interval = 1000; 
-				timer.Elapsed += OnTimedEvent;
-				timer.Enabled = true; 
-			}; 
+			fnStartTimer();
+		 
 		}
 		void fnInitializeCircleBar()
 		{
@@ -41,7 +35,13 @@ namespace CircularProgressBar
 			initCircularProgressBar.getCircularProgressBar().setPrimaryColor(Color.ParseColor("#0D85EC")); ;
 			initCircularProgressBar.getCircularProgressBar().setBackgroundColor(Color.ParseColor("#83C6FF"));  
 		}
-
+		void fnStartTimer()
+		{ 
+			var timer = new System.Timers.Timer();
+			timer.Interval = 1000;
+			timer.Elapsed += OnTimedEvent;
+			timer.Enabled = true;
+		}
 		void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			RunOnUiThread (FnUpdateProgress); 
