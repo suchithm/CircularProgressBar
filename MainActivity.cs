@@ -1,7 +1,5 @@
 ﻿using Android.App;
-using Android.Widget;
 using Android.OS;
-using Java.Lang;
 using Android.Graphics;
 
 namespace CircularProgressBar
@@ -17,8 +15,7 @@ namespace CircularProgressBar
 			RequestWindowFeature(Android.Views.WindowFeatures.NoTitle);
 			SetContentView (Resource.Layout.Main); 
 			fnInitializeCircleBar();
-			fnStartTimer();
-		 
+			fnStartTimer(); 
 		}
 		void fnInitializeCircleBar()
 		{

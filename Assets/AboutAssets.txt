@@ -17,3 +17,270 @@ public class ReadAsset : Activity
 Additionally, some Android functions will automatically load asset files:
 
 Typeface tf = Typeface.CreateFromAsset (Context.Assets, "fonts/samplefont.ttf");
+
+---------------------------------
+
+Circular progress bar example using xamarin android.
+
+In brief: Here you can check the implementation of custom android widget called circualr progress bar in steps using xamarin android.
+
+In Description : Android progress bar usually used to represent the current status of any running process or it may be used to represent the time interval 
+given to user to interact with the UI(like Quiz).  
+This is a custom implementation of circualr progress bar without using any xml selectors and done from code behind.
+
+In steps:
+Step 1: Declare a class called CircularProgressBarClass.cs inheriting from android base class View. This includes the functionalities for
+drawing circualr progress bar and updating it.
+
+//CircularProgressBarClass.cs
+using Android.Views;
+using Android.Graphics;
+using Android.Content;
+using Android.Util;
+
+namespace CircularProgressBar
+{
+	public class CircularProgressBarClass : View
+	{ 
+	  int mDuration;
+	  int mProgress;
+	  Paint mPaint = new Paint();
+	  RectF mRectF = new RectF();
+	  Color mBackgroundColor;
+	  Color mPrimaryColor; 
+	  float mStrokeWidth;
+
+	  public IOnProgressChangeListener mOnChangeListener;
+
+	   public interface IOnProgressChangeListener {
+			
+			void onChange(int duration, int progress, float rate);
+		}
+
+		public void setOnProgressChangeListener(IOnProgressChangeListener l)
+		{
+			mOnChangeListener = l;
+		}
+		public CircularProgressBarClass(Context context) :base(context) {
+		}
+
+		public CircularProgressBarClass(Context context, IAttributeSet attrs) : base(context,attrs) {
+		}
+
+		public void setMax( int max ) {
+			if( max &lt; 0 ) {
+				max = 0;
+			}
+			mDuration = max;
+		}
+
+		public int getMax() {
+			return mDuration;
+		}
+
+		public void setProgress( int progress ) {
+			if( progress &gt; mDuration ) {
+				progress = mDuration;
+			}
+			mProgress = progress;
+			if( mOnChangeListener != null ) {
+				mOnChangeListener.onChange(mDuration, progress, getRateOfProgress());
+			}
+			Invalidate();
+		}
+
+		public int getProgress() {
+			return mProgress;
+		}
+
+		public void setBackgroundColor( Color color ) {
+			mBackgroundColor = color;
+		}
+
+		public void setPrimaryColor( Color color ) {
+			mPrimaryColor = color;
+		}
+
+		public void setCircleWidth(float width) {
+			mStrokeWidth = width;
+		}
+
+		protected override void OnDraw (Canvas canvas)
+		{
+			base.OnDraw (canvas);
+			int halfWidth = Width / 2;
+			int halfHeight = Height/2;
+			int radius = halfWidth &lt; halfHeight ? halfWidth : halfHeight;
+			float halfStrokeWidth = mStrokeWidth / 2;
+
+			mPaint.Color=mBackgroundColor;
+			mPaint.Dither=true;
+			mPaint.Flags = PaintFlags.AntiAlias; 
+			mPaint.AntiAlias=true;
+			mPaint.StrokeWidth=mStrokeWidth;
+			mPaint.SetStyle(Paint.Style.Stroke);
+			canvas.DrawCircle(halfWidth, halfHeight, radius - halfStrokeWidth, mPaint);
+
+			mPaint.Color=mPrimaryColor;
+			mRectF.Top = halfHeight - radius + halfStrokeWidth;
+			mRectF.Bottom = halfHeight + radius - halfStrokeWidth;
+			mRectF.Left = halfWidth - radius + halfStrokeWidth;
+			mRectF.Right = halfWidth + radius - halfStrokeWidth;
+			canvas.DrawArc(mRectF, -90, getRateOfProgress() * 360, false, mPaint);
+			canvas.Save();
+		}  
+		float getRateOfProgress() {
+			return (float)mProgress / mDuration;
+		}
+	}
+}
+
+Step 2: Add one more class called InitCircularProgressClass inheriting from Framelayout and interface IOnProgressChangeListener from 
+CircularProgressBarClass to listen the on change event. And also adds a textview on the center of circualr bar to display progress in 
+digits.
+
+//InitCircularProgressClass.cs
+using Android.Widget;
+using Android.Content;
+using Android.Views;
+using Android.Graphics;
+using Android.Util;
+
+namespace CircularProgressBar
+{
+	public class InitCircularProgressClass :FrameLayout,CircularProgressBarClass.IOnProgressChangeListener
+	{
+		CircularProgressBarClass mCircularProgressBar;
+		TextView mRateText; 
+		int maxValue;
+		public InitCircularProgressClass(Context context):base(context) { 
+			init();
+		}
+		public InitCircularProgressClass(Context context, IAttributeSet attrs) :base(context,attrs){ 
+			init();
+		}
+		void init() {
+			mCircularProgressBar = new CircularProgressBarClass( Context);
+			AddView(mCircularProgressBar);
+			var lp = new LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+			lp.Gravity = GravityFlags.Center;
+			mCircularProgressBar.LayoutParameters=lp;
+			mRateText = new TextView(Context);
+			AddView(mRateText);
+			mRateText.LayoutParameters=lp;
+			mRateText.Gravity=GravityFlags.Center;  
+			mCircularProgressBar.setOnProgressChangeListener(this);
+		}
+		public void setMax( int max ) {
+			mCircularProgressBar.setMax(max);
+			maxValue = max;
+		}
+
+		public void setProgress(int progress) {
+			mCircularProgressBar.setProgress(progress);
+		}
+
+		public CircularProgressBarClass getCircularProgressBar() {
+			return mCircularProgressBar;
+		}
+
+		public void setTextSize(float size) {
+			mRateText.SetTextSize(ComplexUnitType.Dip,size);
+		}
+
+		public void setTextColor( Color color) {
+			mRateText.SetTextColor(color); 
+		} 
+
+		public void setTextTypeFaceBold()
+		{
+			mRateText.Typeface = Typeface.DefaultBold;
+		}
+			
+		public void onChange(int duration, int progress, float rate)
+		{ 
+			mRateText.Text=( (int) (rate * maxValue )).ToString();    
+		}
+	}
+}
+
+Step 3: Open layout file Main.axml and add below code in side the parent layout.
+
+   &lt;CircularProgressBar.InitCircularProgressClass
+                android:id="@+id/rate_progress_bar"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"  /&gt;
+
+Step 4: Edit the Activity file to initialize the progress bar with its proportis and update it based on the timer click.
+
+using Android.App;
+using Android.OS;
+using Android.Graphics;
+
+namespace CircularProgressBar
+{
+	[Activity (Label = "QuickQuiz", MainLauncher = true, Icon = "@mipmap/icon")]
+	public class MainActivity : Activity
+	{
+		InitCircularProgressClass initCircularProgressBar;  
+
+		protected override void OnCreate (Bundle savedInstanceState)
+		{
+			base.OnCreate (savedInstanceState);
+			RequestWindowFeature(Android.Views.WindowFeatures.NoTitle);
+			SetContentView (Resource.Layout.Main); 
+			fnInitializeCircleBar();
+			fnStartTimer(); 
+		}
+		void fnInitializeCircleBar()
+		{
+			initCircularProgressBar = (InitCircularProgressClass)FindViewById(Resource.Id.rate_progress_bar);
+			initCircularProgressBar.setMax(60);
+			initCircularProgressBar.ClearAnimation(); 
+			initCircularProgressBar.setTextSize (24);
+			initCircularProgressBar.setTextColor (Color.ParseColor("#0D85EC"));
+			initCircularProgressBar.setTextTypeFaceBold ();
+			initCircularProgressBar.setProgress(0);
+
+			initCircularProgressBar.getCircularProgressBar().setCircleWidth(20);
+			initCircularProgressBar.getCircularProgressBar().setMax(60);
+			initCircularProgressBar.getCircularProgressBar().setPrimaryColor(Color.ParseColor("#0D85EC")); ;
+			initCircularProgressBar.getCircularProgressBar().setBackgroundColor(Color.ParseColor("#83C6FF"));  
+		}
+		void fnStartTimer()
+		{ 
+			var timer = new System.Timers.Timer();
+			timer.Interval = 1000;
+			timer.Elapsed += OnTimedEvent;
+			timer.Enabled = true;
+		}
+		void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			RunOnUiThread (FnUpdateProgress); 
+		}
+
+		int secondUpdate=0;
+		public  void FnUpdateProgress()
+		{ 
+			secondUpdate++;
+			if(secondUpdate &lt;= 60){
+				initCircularProgressBar.setProgress(secondUpdate);
+			}
+			else if(secondUpdate == 61){
+				initCircularProgressBar.ClearAnimation();
+				initCircularProgressBar=null;
+				initCircularProgressBar = (InitCircularProgressClass)FindViewById(Resource.Id.rate_progress_bar);
+				secondUpdate=1;
+				initCircularProgressBar.setProgress(secondUpdate);
+			}
+		}
+	}
+}
+
+Find the complete solution code on github https://github.com/suchithm/CircularProgressBar
+
+This is all about on the implementation of Circular progress bar in xamarin android. I will come back with another post on using this widget
+with other requirements. Keep visiting and share your thoughts on this. 
+
+ 

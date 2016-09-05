@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Views;
+﻿using Android.Views;
 using Android.Graphics;
 using Android.Content;
 using Android.Util;
@@ -7,15 +6,14 @@ using Android.Util;
 namespace CircularProgressBar
 {
 	public class CircularProgressBarClass : View
-	{
-		
-	  int mDuration = 100;
-	  int mProgress = 30;
+	{ 
+	  int mDuration;
+	  int mProgress;
 	  Paint mPaint = new Paint();
 	  RectF mRectF = new RectF();
-	  Color mBackgroundColor = Color.White;
-	  Color mPrimaryColor = Color.Yellow; 
-	  float mStrokeWidth = 10F;
+	  Color mBackgroundColor;
+	  Color mPrimaryColor; 
+	  float mStrokeWidth;
 
 	  public IOnProgressChangeListener mOnChangeListener;
 
@@ -95,9 +93,8 @@ namespace CircularProgressBar
 			mRectF.Right = halfWidth + radius - halfStrokeWidth;
 			canvas.DrawArc(mRectF, -90, getRateOfProgress() * 360, false, mPaint);
 			canvas.Save();
-		} 
-		//a
-		private float getRateOfProgress() {
+		}  
+		float getRateOfProgress() {
 			return (float)mProgress / mDuration;
 		}
 	}

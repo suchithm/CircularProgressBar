@@ -8,13 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:background="#ff76aef2"
+        android:background="@drawable/roundedCorner"
         android:layout_centerInParent="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="3dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/round_corner_white"
             android:weightSum="2">
             <RelativeLayout
                 android:layout_width="0dp"

@@ -1,11 +1,8 @@
-﻿using System;
-using Android.Widget;
+﻿using Android.Widget;
 using Android.Content;
 using Android.Views;
 using Android.Graphics;
 using Android.Util;
-using Android.App;
-
 
 namespace CircularProgressBar
 {
@@ -13,6 +10,7 @@ namespace CircularProgressBar
 	{
 		CircularProgressBarClass mCircularProgressBar;
 		TextView mRateText; 
+		int maxValue;
 		public InitCircularProgressClass(Context context):base(context) { 
 			init();
 		}
@@ -24,7 +22,7 @@ namespace CircularProgressBar
 			AddView(mCircularProgressBar);
 			var lp = new LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 			lp.Gravity = GravityFlags.Center;
-			mCircularProgressBar.LayoutParameters=(lp);
+			mCircularProgressBar.LayoutParameters=lp;
 			mRateText = new TextView(Context);
 			AddView(mRateText);
 			mRateText.LayoutParameters=lp;
@@ -33,6 +31,7 @@ namespace CircularProgressBar
 		}
 		public void setMax( int max ) {
 			mCircularProgressBar.setMax(max);
+			maxValue = max;
 		}
 
 		public void setProgress(int progress) {
@@ -58,7 +57,7 @@ namespace CircularProgressBar
 			
 		public void onChange(int duration, int progress, float rate)
 		{ 
-			mRateText.Text=( (int) (rate * 60 )).ToString();   //x=60 ; max limit
+			mRateText.Text=( (int) (rate * maxValue )).ToString();    
 		}
  
 	}
